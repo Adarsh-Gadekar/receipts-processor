@@ -30,8 +30,7 @@ def calculate_points(receipt):
     items = receipt['items']
     points += (len(items) // 2) * 5
 
-    # Rule 5: If the trimmed length of the item description is a multiple of 3,
-    # multiply the price by 0.2 and round up to the nearest integer
+    # Rule 5: If the trimmed length of the item description is a multiple of 3, multiply the price by 0.2 and round up to the nearest integer
     for item in items:
         description = item['shortDescription'].strip()
         if len(description) % 3 == 0:

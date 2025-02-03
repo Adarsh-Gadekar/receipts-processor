@@ -6,7 +6,7 @@ import math
 
 app = Flask(__name__)
 
-# In-memory storage for receipts and their points
+# In-memory storage for receipts 
 receipts = {}
 
 # Helper function to calculate points

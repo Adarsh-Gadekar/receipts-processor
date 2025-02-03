@@ -13,36 +13,37 @@ receipts = {}
 def calculate_points(receipt):
     points = 0
 
-    # Rule 1: One point for every alphanumeric character in the retailer name
+    # Rule 1
     retailer_name = receipt['retailer']
     points += len(re.sub(r'[^a-zA-Z0-9]', '', retailer_name))
 
-    # Rule 2: 50 points if the total is a round dollar amount with no cents
+    # Rule 2
     total = float(receipt['total'])
     if total == int(total):
         points += 50
 
-    # Rule 3: 25 points if the total is a multiple of 0.25
+    # Rule 3
     if total % 0.25 == 0:
         points += 25
 
-    # Rule 4: 5 points for every two items on the receipt
+    # Rule 4
     items = receipt['items']
     points += (len(items) // 2) * 5
 
-    # Rule 5: If the trimmed length of the item description is a multiple of 3, multiply the price by 0.2 and round up to the nearest integer
+    # Rule 5
     for item in items:
         description = item['shortDescription'].strip()
         if len(description) % 3 == 0:
             price = float(item['price'])
             points += math.ceil(price * 0.2)
-
-    # Rule 6: 6 points if the day in the purchase date is odd
+    
+    # Rule 6 Skipped as the code is not written by LLM
+    # Rule 7
     purchase_date = datetime.strptime(receipt['purchaseDate'], "%Y-%m-%d")
     if purchase_date.day % 2 == 1:
         points += 6
 
-    # Rule 7: 10 points if the time of purchase is after 2:00pm and before 4:00pm
+    # Rule 8
     purchase_time = datetime.strptime(receipt['purchaseTime'], "%H:%M").time()
     if datetime.strptime("14:00", "%H:%M").time() < purchase_time < datetime.strptime("16:00", "%H:%M").time():
         points += 10
